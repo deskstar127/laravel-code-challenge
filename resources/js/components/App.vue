@@ -34,6 +34,8 @@
         <main class="py-4">
             <router-view></router-view>
         </main>
+
+        <notifications />
     </div>
 </template>
 

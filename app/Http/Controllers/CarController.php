@@ -16,18 +16,18 @@ class CarController extends Controller
      */
     public function index(): array
     {
-        return Car::all()->toArray();
+        return Car::with('owner', 'address')->get()->toArray();
     }
 
     /**
      * Return a single car.
      *
      * @param Car $car
-     * @return Car
+     * @return array
      */
-    public function show(Car $car): Car
+    public function show(Car $car): array
     {
-        return $car;
+        return ['car' => $car, 'owner' => $car->owner, 'address' => $car->address];
     }
 
     /**

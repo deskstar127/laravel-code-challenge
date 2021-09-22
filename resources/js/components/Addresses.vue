@@ -6,6 +6,7 @@
                     <div class="card-header">Addresses</div>
 
                     <div class="card-body">
+                        <address-stats-component />
                         <address-table-component></address-table-component>
                     </div>
                 </div>

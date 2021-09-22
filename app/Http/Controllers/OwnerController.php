@@ -6,6 +6,7 @@ use App\Owner;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OwnerController extends Controller
 {
@@ -16,18 +17,18 @@ class OwnerController extends Controller
      */
     public function index(): array
     {
-        return Owner::all()->toArray();
+        return Owner::with('addresses', 'cars')->get()->toArray();
     }
 
     /**
      * Return a single owner.
      *
      * @param Owner $owner
-     * @return Owner
+     * @return array
      */
-    public function show(Owner $owner): Owner
+    public function show(Owner $owner): array
     {
-        return $owner;
+        return ['owner' => $owner, 'addresses' => $owner->addresses, 'cars' => $owner->cars];
     }
 
     /**
@@ -69,5 +70,28 @@ class OwnerController extends Controller
         $owner->delete();
 
         return response()->json(null, 204);
+    }
+
+    /**
+     * Stats owner
+     * @param Request $request
+     * @return array
+    */
+
+    public function stats(Request $request): array
+    {
+        $ownerAddresses = DB::table('addresses')->select('owner_id', DB::raw('count(*) as count'))->groupBy('owner_id');
+        $ownerCars = DB::table('cars')->select('owner_id', DB::raw('count(*) as count'))->groupBy('owner_id');
+        $stats = DB::table('owners')
+            ->joinSub($ownerAddresses, 'oa', function ($join) {
+                $join->on('owners.id', '=', 'oa.owner_id');
+            })
+            ->joinSub($ownerCars, 'oc', function ($join) {
+                $join->on('owners.id', '=', 'oc.owner_id');
+            })
+            ->select(DB::raw('avg(oa.count) as avg_addresses'), DB::raw('avg(oc.count) as avg_cars'))
+            ->get();
+
+        return $stats->toArray();
     }
 }

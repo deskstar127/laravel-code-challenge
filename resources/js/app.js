@@ -12,10 +12,12 @@ import App from './components/App.vue';
 import VueRouter from 'vue-router';
 import VueAxios from 'vue-axios';
 import axios from 'axios';
+import Notifications from 'vue-notification';
 import {routes} from './routes';
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
+Vue.use(Notifications);
 
 import 'vuejs-datatable/dist/themes/bootstrap-4.esm';
 import {VuejsDatatableFactory} from 'vuejs-datatable';

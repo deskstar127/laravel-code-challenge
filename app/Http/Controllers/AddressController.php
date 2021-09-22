@@ -6,6 +6,7 @@ use App\Address;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AddressController extends Controller
 {
@@ -16,18 +17,18 @@ class AddressController extends Controller
      */
     public function index(): array
     {
-        return Address::all()->toArray();
+        return Address::with('owner', 'cars')->get()->toArray();
     }
 
     /**
      * Return a single address.
      *
      * @param Address $address
-     * @return Address
+     * @return array
      */
-    public function show(Address $address): Address
+    public function show(Address $address): array
     {
-        return $address;
+        return ['address' => $address, 'owner' => $address->owner];
     }
 
     /**
@@ -69,5 +70,24 @@ class AddressController extends Controller
         $address->delete();
 
         return response()->json(null, 204);
+    }
+
+    /**
+     * Stats address
+     * @param Request $request
+     * @return array
+     */
+
+    public function stats(Request $request): array
+    {
+        $addressCars = DB::table('cars')->select('address_id', DB::raw('count(*) as count'))->groupBy('address_id');
+        $stats = DB::table('addresses')
+            ->joinSub($addressCars, 't', function ($join) {
+                $join->on('addresses.id', '=', 't.address_id');
+            })
+            ->select(DB::raw('avg(t.count) as avg_cars'))
+            ->get();
+
+        return $stats->toArray();
     }
 }

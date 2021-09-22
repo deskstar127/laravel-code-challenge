@@ -6,6 +6,7 @@
                     <div class="card-header">Owners</div>
 
                     <div class="card-body">
+                        <owner-stats-component />
                         <owner-table-component></owner-table-component>
                     </div>
                 </div>

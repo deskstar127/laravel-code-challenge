@@ -30,6 +30,20 @@ export default {
                     align: 'left'
                 },
                 {
+                    label: 'Address Number',
+                    headerAlign: 'left',
+                    align: 'left',
+                    interpolate: true,
+                    representedAs: ({addresses}) => addresses.length
+                },
+                {
+                    label: 'Car Number',
+                    headerAlign: 'left',
+                    align: 'left',
+                    interpolate: true,
+                    representedAs: ({cars}) => cars.length
+                },
+                {
                     label: 'Actions',
                     headerAlign: 'right',
                     align: 'right',

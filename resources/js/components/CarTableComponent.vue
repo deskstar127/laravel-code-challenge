@@ -36,6 +36,22 @@ export default {
                     align: 'left'
                 },
                 {
+                    label: 'Owner',
+                    headerAlign: 'left',
+                    align: 'left',
+                    interpolate: true,
+                    representedAs: ({owner}) => `${owner.first_name} ${owner.last_name}`
+                },
+                {
+                    label: 'Address',
+                    headerAlign: 'left',
+                    align: 'left',
+                    interpolate: true,
+                    representedAs: ({address}) => {
+                        return address.address + '<br>' + address.city + '<br>' + address.country + '<br>' + address.postal_code
+                    }
+                },
+                {
                     label: 'Actions',
                     headerAlign: 'right',
                     align: 'right',

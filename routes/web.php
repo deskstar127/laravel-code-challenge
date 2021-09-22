@@ -17,12 +17,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('owner', 'OwnerController@index');
+Route::get('owner/stats', 'OwnerController@stats');
 Route::get('owner/{owner}', 'OwnerController@show');
 Route::post('owner', 'OwnerController@store');
 Route::put('owner/{owner}', 'OwnerController@update');
 Route::delete('owner/{owner}', 'OwnerController@delete');
 
 Route::get('address', 'AddressController@index');
+Route::get('address/stats', 'AddressController@stats');
 Route::get('address/{address}', 'AddressController@show');
 Route::post('address', 'AddressController@store');
 Route::put('address/{address}', 'AddressController@update');

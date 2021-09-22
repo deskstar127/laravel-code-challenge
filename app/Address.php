@@ -3,19 +3,21 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Address extends Model
 {
+    protected $fillable = ['address', 'city', 'country', 'postal_code'];
     /**
      * Get owners associated with an address.
      *
-     * @return HasOne
+     * @return BelongsTo
      */
-    public function owners(): HasOne
+    public function owner(): BelongsTo
     {
-        return $this->hasOne(Owner::class);
+        return $this->belongsTo(Owner::class);
     }
 
     /**

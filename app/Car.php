@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Car extends Model
@@ -12,11 +13,11 @@ class Car extends Model
     /**
      * Get owners associated with a car.
      *
-     * @return HasOne
+     * @return BelongsTo
      */
-    public function owners(): HasOne
+    public function owner(): BelongsTo
     {
-        return $this->hasOne(Owner::class);
+        return $this->belongsTo(Owner::class);
     }
 
     /**
@@ -24,9 +25,9 @@ class Car extends Model
      *
      * @return HasOne
      */
-    public function addresses(): HasOne
+    public function address(): BelongsTo
     {
-        return $this->hasOne(Address::class);
+        return $this->belongsTo(Address::class);
     }
 
     public function getTypes(): array

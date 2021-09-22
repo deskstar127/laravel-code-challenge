@@ -28,6 +28,20 @@ export default {
                     }
                 },
                 {
+                    label: 'Owner',
+                    headerAlign: 'left',
+                    align: 'left',
+                    interpolate: true,
+                    representedAs: ({owner}) => `${owner.first_name} ${owner.last_name}`
+                },
+                {
+                    label: 'Car Number',
+                    headerAlign: 'left',
+                    align: 'left',
+                    interpolate: true,
+                    representedAs: ({cars}) => cars.length
+                },
+                {
                     label: 'Actions',
                     headerAlign: 'right',
                     align: 'right',
